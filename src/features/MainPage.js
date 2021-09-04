@@ -1,33 +1,41 @@
 import React from 'react';
 import PokemonList from './AppPokemonList';
 import AppNav from '../components/AppNav';
-export default class MainPage extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            menu: 0
-        }
-    }
+import PokemonDetail from './AppPokemonDetail';
 
-    state = {
-        menu: 0,
-    }
-
-    back() {
-        this.setState({ menu: 0 })
-    }
-
-    render() {
+let selectedPokemon = null;
+export function Features(prop) {
+    if (prop.menu === 0) {
+        return (<PokemonList default={true} selectedPokemon={ (data) => 
+            {
+                selectedPokemon = data;
+                prop.showDetail(true)
+            }
+        }></PokemonList>)
+    } else if (prop.menu === 1) {
+        return (<div><h2>Hello</h2></div>)
+    } else if (prop.menu === 2) {
         return (
-            <div>
-              {this.state.menu === 0 ? <PokemonList default={true}></PokemonList> : <div></div>}
-              <AppNav 
-                menu={this.state.menu}
-                selectMenu={(data) => {
-                  this.setState({ menu: data })
-                }}
-              ></AppNav>
-            </div>
-          );
+            <PokemonDetail 
+            pokemon={selectedPokemon}
+            ></PokemonDetail>
+        )
     }
+}
+export default function MainPage(props) {
+    const [menu, setMenu] = React.useState(0);
+    return (
+        <div>
+            <Features 
+            menu={menu}
+            showDetail={() => {setMenu(2)}}
+            />
+            <AppNav 
+                menu={menu}
+                selectMenu={(data) => {
+                    setMenu(data)
+                }}
+            ></AppNav>
+        </div>
+      );
 }

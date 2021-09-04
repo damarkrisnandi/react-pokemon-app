@@ -16,13 +16,14 @@ const useStyles = makeStyles({
 
 export default function AppList(props) {
     const list = props.list;
+    const title = props.title
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem>
-                <ListItemText primary="Pokemon" />
+                <ListItemText primary={title} />
                 </ListItem>
             </List>
             <Divider />

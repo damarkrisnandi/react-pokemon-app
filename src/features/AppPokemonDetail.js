@@ -2,6 +2,7 @@ import { capitalize, Container } from '@material-ui/core';
 import React from 'react';
 import AppTable from '../components/AppTable';
 import { getData } from '../utils/service';
+import PokeBall from '../components/AppPokeBall';
 
 export default class PokemonDetail extends React.Component {
     image = '';
@@ -37,7 +38,12 @@ export default class PokemonDetail extends React.Component {
                     <br></br>
                     <label><strong>Moves </strong></label>
                     <br></br>
-                    <AppTable data={this.state.pokemonDetail.moves}></AppTable>
+                    <AppTable data={this.state.pokemonDetail.moves.map(data => data.move)}></AppTable>
+                    <div style={{position:'absolute', bottom: '50%', right: '10%'}}>
+                    <PokeBall />
+                    </div>
+                    
+                    
                 </Container>
             </div>
         );

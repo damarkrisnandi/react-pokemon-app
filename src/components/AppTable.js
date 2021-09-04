@@ -116,7 +116,7 @@ export default function AppTable(props) {
           ).map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {capitalize(row.move.name.replace('-', ' '))}
+                {capitalize(row.name)}
               </TableCell>
             </TableRow>
           ))}

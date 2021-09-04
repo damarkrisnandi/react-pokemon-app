@@ -1,4 +1,5 @@
 import React from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
 import AppList from '../components/AppList';
 import { getAll } from '../utils/service';
 import PokemonDetail from './AppPokemonDetail';
@@ -35,13 +36,13 @@ export default class PokemonList extends React.Component {
     render() {
         
         return (
-            this.showDetail ? 
-            <PokemonDetail pokemon={this.state.selectedPokemon}></PokemonDetail> :
             <AppList 
+                title='Pokemon'
                 list={this.state.pokemonList}
                 selectData={(data) => 
                     {
                         this.selectedPokemon(data);
+                        this.props.selectedPokemon(data);
                     }}
             ></AppList>
         )
