@@ -18,3 +18,13 @@ export async function getData(url) {
 
     return response;
 }
+
+export function savePokemon(data) {
+    const ownedPokemon = JSON.parse(localStorage.getItem('ownedPokemon'));
+    if (ownedPokemon) {
+        ownedPokemon.push(data);
+        localStorage.setItem('ownedPokemon', JSON.stringify(ownedPokemon));
+    } else {
+        localStorage.setItem('ownedPokemon', JSON.stringify([data]))
+    }
+}

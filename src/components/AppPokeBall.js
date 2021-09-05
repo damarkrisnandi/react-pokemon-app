@@ -14,8 +14,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PokeBall() {
+function catchPokemon() {
+  // 0 or 1, you get the pokemon if value = 1
+  return Math.round(Math.random())
+}
+
+export default function PokeBall(props) {
   const classes = useStyles();
+  const { click } = props;
+
+  const handleClick = () => {
+    click(catchPokemon())
+  }
 
   return (
     <Chip
@@ -28,6 +38,8 @@ export default function PokeBall() {
     label="Catch!"
     clickable
     color="primary"
+    size="medium"
+    onClick={handleClick}
   />
     
   );

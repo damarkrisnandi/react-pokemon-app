@@ -23,7 +23,7 @@ export default function AppList(props) {
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem>
-                <ListItemText primary={title} />
+                    <ListItemText primary={title} style={{fontWeight: 'bold'}}/>
                 </ListItem>
             </List>
             <Divider />
