@@ -1,5 +1,4 @@
 import { capitalize, Container } from '@material-ui/core';
-import { Dialog, DialogTitle } from '@material-ui/core';
 import React from 'react';
 import AppTable from '../components/AppTable';
 import { getData, savePokemon } from '../utils/service';

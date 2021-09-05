@@ -35,7 +35,7 @@ export default class MyPokemonList extends React.Component {
                 list={this.state.myPokemonList}
                 selectData={(data) => {
                     this.selectedPokemon(data);
-                    this.props.selectedPokemon(data);
+                    // this.props.selectedPokemon(data);
                 }}
                 deleteData={(data) => {
                     this.deletePokemon(data)
