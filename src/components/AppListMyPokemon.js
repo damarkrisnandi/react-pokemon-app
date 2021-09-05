@@ -4,8 +4,9 @@ import { capitalize } from '../utils/miscellanous';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { ListItemAvatar, Avatar, ListItemSecondaryAction, IconButton } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
-import { Chip } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
   table: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function AppList(props) {
+export default function ListMyPokemon(props) {
     const list = props.list;
     const title = props.title
     const classes = useStyles();
@@ -29,13 +30,21 @@ export default function AppList(props) {
             <Divider />
             <List component="nav" aria-label="secondary mailbox folders">
                 {list.map((row) => (
-                    <ListItem button onClick={async () => await props.selectData(row)} key={row.name}>
-                        <ListItemText primary={capitalize(row.name)} />
-                        <Chip 
-                            label={'Owned: ' + (row.owned || 0).toString()} 
-                            variant="outlined" 
-                            color={row.owned && row.owned > 0 ? 'primary' : 'secondary'}
+                    <ListItem button onClick={async () => await props.selectData(row)} key={row.nickname}>
+                        <ListItemAvatar>
+                            <Avatar alt={row.nickname} src={row.img} />
+                        </ListItemAvatar>
+                        <ListItemText 
+                            primary={capitalize(row.nickname)} 
+                            secondary={`(${capitalize(row.name)})`}
                         />
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete" onClick={() => {
+                                props.deleteData(row)
+                            }}>
+                                <DeleteIcon />
+                            </IconButton>
+                    </ListItemSecondaryAction>
                     </ListItem>
                 ))}
                 

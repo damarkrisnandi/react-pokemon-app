@@ -2,6 +2,7 @@ import React from 'react';
 import PokemonList from './AppPokemonList';
 import AppNav from '../components/AppNav';
 import PokemonDetail from './AppPokemonDetail';
+import MyPokemonList from './AppMyPokemon';
 
 let selectedPokemon = null;
 export function Features(prop) {
@@ -13,7 +14,9 @@ export function Features(prop) {
             }
         }></PokemonList>)
     } else if (prop.menu === 1) {
-        return (<div><h2>Hello</h2></div>)
+        return (
+            <MyPokemonList />
+        )
     } else if (prop.menu === 2) {
         return (
             <PokemonDetail 

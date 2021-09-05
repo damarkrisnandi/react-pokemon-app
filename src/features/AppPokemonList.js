@@ -1,8 +1,7 @@
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import AppList from '../components/AppList';
-import { getAll } from '../utils/service';
-import PokemonDetail from './AppPokemonDetail';
+import { getAll, getOwnedPokemon } from '../utils/service';
 
 export default class PokemonList extends React.Component {
     state = {
@@ -22,14 +21,23 @@ export default class PokemonList extends React.Component {
 
     componentDidMount() {
         getAll().then((res) => {
-            console.log(res);
-            this.setState({ pokemonList: res.results })
+            let pokemonList = [];
+            const ownedPokemon = getOwnedPokemon();
+            for (let data of res.results) {
+                let ownedByName = ownedPokemon.filter(o => o.name === data.name);
+                const pokemon = {
+                    name: data.name,
+                    url: data.url,
+                    owned: ownedByName.length
+                }
+                pokemonList = [...pokemonList, pokemon];
+            }
+            this.setState({ pokemonList })
         })
     }
 
     selectedPokemon(data) {
         this.setState({ selectedPokemon: data});
-        console.log(this.state.selectedPokemon);
         this.showDetail = true;
     }
 

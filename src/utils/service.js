@@ -28,3 +28,16 @@ export function savePokemon(data) {
         localStorage.setItem('ownedPokemon', JSON.stringify([data]))
     }
 }
+
+export function getOwnedPokemon() {
+    return JSON.parse(localStorage.getItem('ownedPokemon'));
+}
+
+export function deleteOwnedPokemon(nickname) {
+    const ownedPokemon = JSON.parse(localStorage.getItem('ownedPokemon'));
+    if (ownedPokemon) {
+        const idx = ownedPokemon.findIndex(data => data.nickname === nickname);
+        ownedPokemon.splice(idx, 1);
+        localStorage.setItem('ownedPokemon', JSON.stringify(ownedPokemon));
+    }
+}
