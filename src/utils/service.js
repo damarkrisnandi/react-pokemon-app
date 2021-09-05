@@ -30,7 +30,7 @@ export function savePokemon(data) {
 }
 
 export function getOwnedPokemon() {
-    return JSON.parse(localStorage.getItem('ownedPokemon'));
+    return JSON.parse(localStorage.getItem('ownedPokemon')) || [];
 }
 
 export function deleteOwnedPokemon(nickname) {
