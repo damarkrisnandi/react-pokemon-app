@@ -19,6 +19,17 @@ export async function getData(url) {
     return response;
 }
 
+export async function getListByPage(page, pageSize) {
+    const url = `${URL_API}/pokemon?offset=${(page - 1)*pageSize}&limit=${pageSize}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers
+    })
+    .then(_ => _.ok ? _.json() : null)
+
+    return response;
+}
+
 export function savePokemon(data) {
     const ownedPokemon = JSON.parse(localStorage.getItem('ownedPokemon'));
     if (ownedPokemon) {
