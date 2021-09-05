@@ -24,7 +24,7 @@ export default class PokemonList extends React.Component {
             let pokemonList = [];
             const ownedPokemon = getOwnedPokemon();
             for (let data of res.results) {
-                let ownedByName = ownedPokemon.filter(o => o.name === data.name);
+                let ownedByName = ownedPokemon ? ownedPokemon.filter(o => o.name === data.name) : [];
                 const pokemon = {
                     name: data.name,
                     url: data.url,
