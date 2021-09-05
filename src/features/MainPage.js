@@ -29,16 +29,14 @@ export default function MainPage(props) {
     const [menu, setMenu] = React.useState(0);
     return (
         <div>
-            <Features 
-            menu={menu}
-            showDetail={() => {setMenu(2)}}
-            />
-            <AppNav 
-                menu={menu}
-                selectMenu={(data) => {
-                    setMenu(data)
-                }}
-            ></AppNav>
+            <div style={{maxWidth: '500px', display: 'block', margin: 'auto'}}>
+                <Features 
+                    menu={menu}
+                    showDetail={() => {setMenu(2)}}
+                />
+            </div>
+            <AppNav menu={menu} selectMenu={(data) => { setMenu(data) }} />
+            
         </div>
       );
 }
