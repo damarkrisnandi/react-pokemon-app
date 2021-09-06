@@ -37,7 +37,7 @@ export default class Message extends React.Component {
       });
     
       render() {
-        const {title, message, isSubmit, onClose, onSubmit, errorSubmit} = this.props;
+        const {title, message, isSubmit, onClose, onSubmit, errorSubmit, name} = this.props;
         const classes = this.useStyles
         return (
             <Card className={classes.root} variant="outlined" 
@@ -54,8 +54,9 @@ export default class Message extends React.Component {
                     isSubmit ?
                     <div>
                         <TextField 
+                        style={{width: '100%'}}
                         id="outlined-basic" 
-                        label="Nickname" 
+                        label={`Nickname (default: ${name || ''})`} 
                         variant="outlined" 
                         value={this.state.nickname} onChange={this.handleChange}
                         />

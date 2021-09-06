@@ -21,7 +21,7 @@ function catchPokemon() {
 
 export default function PokeBall(props) {
   const classes = useStyles();
-  const { click } = props;
+  const { click, disabled } = props;
 
   const handleClick = () => {
     click(catchPokemon())
@@ -40,6 +40,7 @@ export default function PokeBall(props) {
     color="primary"
     size="medium"
     onClick={handleClick}
+    disabled={disabled}
   />
     
   );

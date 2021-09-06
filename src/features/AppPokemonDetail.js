@@ -57,7 +57,7 @@ export default class PokemonDetail extends React.Component {
     
     valid(nickname) {
         if (this.ownedPokemons.find((data) => data.nickname.toLowerCase() === (nickname).toLowerCase())) {
-            this.setState({errorSubmitMessage: 'Nickname is already in use!'});
+            this.setState({errorSubmitMessage: `Nickname ${nickname} is already in use!`});
             return false;
         }
         this.setState({errorSubmitMessage: ''});
@@ -69,20 +69,21 @@ export default class PokemonDetail extends React.Component {
         return (
             <div>
                 <Container style={{ marginBottom: '100px'}}>
-                    
-                    <span><h2>{capitalize(this.props.pokemon.name)}</h2></span>
-                    <img src={this.image} alt={this.props.pokemon.name} style={{width: '100%',height: 'auto'}}></img>
-                    <label><strong>Types: {this.state.pokemonDetail.types.map(data => data.type.name).join(', ')}</strong></label>
-                    <br></br>
-                    <label><strong>Moves </strong></label>
-                    <br></br>
-                    <AppTable data={this.state.pokemonDetail.moves.map(data => data.move)}></AppTable>
-                    <div style={{position:'fixed', bottom: '10%', right: '50%', transform: 'translate(50%, 50%)', zIndex: '999'}}>
-                    <PokeBall click={(data) => {
-                        this.isSavePokemon(data === 1)
-                    }}/>
+                    <div>
+                        <span><h2>{capitalize(this.props.pokemon.name)}</h2></span>
+                        <img src={this.image} alt={this.props.pokemon.name} style={{width: '100%',height: 'auto'}}></img>
+                        <label><strong>Types: {this.state.pokemonDetail.types.map(data => data.type.name).join(', ')}</strong></label>
+                        <br></br>
+                        <label><strong>Moves </strong></label>
+                        <br></br>
+                        <AppTable data={this.state.pokemonDetail.moves.map(data => data.move)}></AppTable>
+                        <div style={{position:'fixed', bottom: '10%', right: '50%', transform: 'translate(50%, 50%)', zIndex: '999'}}>
+                        <PokeBall 
+                        click={(data) => { this.isSavePokemon(data === 1) }} 
+                        disabled={this.state.openSuccessDlg || this.state.openFailedDlg}
+                        />
+                        </div>
                     </div>
-
                     {
                         this.state.openSuccessDlg || this.state.openFailedDlg ? 
                         <div style={{position:'fixed', bottom: '50%', right: '50%', transform: 'translate(50%, 50%)', maxWidth: '500px', width: '100%'}}>
@@ -96,6 +97,7 @@ export default class PokemonDetail extends React.Component {
                                     isSubmit={this.state.openSuccessDlg && !this.state.openFailedDlg}
                                     onSubmit={(nickname) => {this.onGetPokemon(nickname)}}
                                     errorSubmit={this.state.errorSubmitMessage}
+                                    name={this.state.pokemonDetail.name}
                                 />
                             </div> 
                         </div> : null
