@@ -21,7 +21,6 @@ export default class Message extends React.Component {
       }
     
       handleSubmit(event) {
-        alert('Your favorite flavor is: ' + this.state.value);
         event.preventDefault();
       }
 
@@ -38,7 +37,7 @@ export default class Message extends React.Component {
       });
     
       render() {
-        const {title, message, isSubmit, onClose, onSubmit} = this.props;
+        const {title, message, isSubmit, onClose, onSubmit, errorSubmit} = this.props;
         const classes = this.useStyles
         return (
             <Card className={classes.root} variant="outlined" 
@@ -54,9 +53,14 @@ export default class Message extends React.Component {
                 {
                     isSubmit ?
                     <div>
+                        <TextField 
+                        id="outlined-basic" 
+                        label="Nickname" 
+                        variant="outlined" 
+                        value={this.state.nickname} onChange={this.handleChange}
+                        />
                         <br/>
-                        <label>Give his nickname!</label>
-                        <TextField id="outlined-basic" label="NickName" variant="outlined" value={this.state.nickname} onChange={this.handleChange}/>
+                        <label>{errorSubmit}</label>
                     </div>
                      :
                     null
@@ -66,11 +70,15 @@ export default class Message extends React.Component {
                 <Button size="small" 
                 onClick={() => {
                     if (isSubmit) {
-                        onSubmit(this.state.nickname)
+                      onSubmit(this.state.nickname)
+                    } else {
+                      onClose(true)
                     }
-                    onClose(true)
                 }
                 }>{isSubmit ? 'Submit' : 'Close'}</Button>
+                {isSubmit ? (
+                  <Button size="small" onClick={() => { onClose(true) }}>Cancel</Button>
+                ) : null}
               </CardActions>
             </Card>
           );

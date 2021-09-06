@@ -3,6 +3,7 @@ import React from 'react';
 import AppList from '../components/AppList';
 import { getListByPage, getOwnedPokemon } from '../utils/service';
 import Pagination from '@material-ui/lab/Pagination';
+import { LinearProgress } from '@material-ui/core';
 
 export default class PokemonList extends React.Component {
     showDetail = false;
@@ -61,24 +62,29 @@ export default class PokemonList extends React.Component {
     render() {
         return (
             <div style={{marginBottom: '100px'}}>
-                <AppList 
-                    title='Pokemon'
-                    list={this.state.pokemonList}
-                    selectData={(data) => 
-                        {
-                            this.selectedPokemon(data);
-                            this.props.selectedPokemon(data);
-                        }}
-                ></AppList>
-                <div style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
-                <Pagination 
-                    count={Math.floor(this.state.pagination.rowCount/ this.state.pagination.pageSize)} 
-                    defaultPage={1} 
-                    siblingCount={0} 
-                    page={this.state.pagination.currentPage} onChange={(event, value) => this.handlePageChange(value)}
-                />
-                </div>
-                
+                {this.state.pokemonList && this.state.pokemonList.length > 0 ? (
+                    <div>
+                        <AppList 
+                            title='Pokemon'
+                            list={this.state.pokemonList}
+                            selectData={(data) => 
+                                {
+                                    this.selectedPokemon(data);
+                                    this.props.selectedPokemon(data);
+                                }}
+                        ></AppList>
+                        <div style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
+                        <Pagination 
+                            count={Math.floor(this.state.pagination.rowCount/ this.state.pagination.pageSize)} 
+                            defaultPage={1} 
+                            siblingCount={0} 
+                            page={this.state.pagination.currentPage} onChange={(event, value) => this.handlePageChange(value)}
+                        />
+                        </div>
+                    </div>
+                ) : (
+                    <LinearProgress />
+                )}
             </div>
         )
     }
