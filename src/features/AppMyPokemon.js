@@ -18,7 +18,6 @@ export default class MyPokemonList extends React.Component {
 
     selectedPokemon(data) {
         this.setState({ selectedPokemon: data});
-        console.log(this.state.selectedPokemon);
         this.showDetail = true;
     }
 

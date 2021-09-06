@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import { Chip } from '@material-ui/core';
+import { Chip, LinearProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
   table: {
@@ -28,7 +28,8 @@ export default function AppList(props) {
             </List>
             <Divider />
             <List component="nav" aria-label="secondary mailbox folders">
-                {list.map((row) => (
+                {list.length > 0 ?
+                list.map((row) => (
                     <ListItem button onClick={async () => await props.selectData(row)} key={row.name}>
                         <ListItemText primary={capitalize(row.name)} />
                         <Chip 
@@ -37,7 +38,9 @@ export default function AppList(props) {
                             color={row.owned && row.owned > 0 ? 'primary' : 'secondary'}
                         />
                     </ListItem>
-                ))}
+                )) :
+                <LinearProgress />
+                }
                 
             </List>
         </div>

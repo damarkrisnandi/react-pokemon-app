@@ -24,8 +24,6 @@ export default class PokemonDetail extends React.Component {
     }
 
     async componentDidMount() {
-        const ownedPokemon = localStorage.getItem('ownedPokemon');
-        console.log('cek', JSON.parse(ownedPokemon))
         getData(this.props.pokemon.url).then(pokemonDetail => {
             this.image = pokemonDetail.sprites.other['official-artwork'].front_default;
             this.setState({ pokemonDetail });
@@ -34,13 +32,9 @@ export default class PokemonDetail extends React.Component {
 
     savePokemon(isGet) {
         if (isGet) {
-            console.log(`You got ${this.state.pokemonDetail.name}`);
-            this.openSuccessDlg = true;
             this.setState({ openSuccessDlg: true, openFailedDlg: false });
         } else {
-            console.log('failed');
             this.setState({ openFailedDlg: true, openSuccessDlg: false });
-            // this.openFailedDlg = true;
         }
     }
 
@@ -67,14 +61,15 @@ export default class PokemonDetail extends React.Component {
                     <label><strong>Moves </strong></label>
                     <br></br>
                     <AppTable data={this.state.pokemonDetail.moves.map(data => data.move)}></AppTable>
-                    <div style={{position:'absolute', bottom: '50%', right: '10%'}}>
+                    <div style={{position:'fixed', bottom: '10%', right: '50%', transform: 'translate(50%, 50%)'}}>
                     <PokeBall click={(data) => {
                         this.savePokemon(data === 1)
                     }}/>
+                    </div>
 
                     {
                         this.state.openSuccessDlg || this.state.openFailedDlg ? 
-                        <div style={{position:'fixed', bottom: '50%', left: '0%'}}>
+                        <div style={{position:'fixed', bottom: '50%', left: '0%', width: '100%'}}>
                             <Message 
                                 title={this.state.openSuccessDlg && !this.state.openFailedDlg ? 'Success' : 'Failed'}
                                 message={this.state.openSuccessDlg && !this.state.openFailedDlg ? 
@@ -84,10 +79,7 @@ export default class PokemonDetail extends React.Component {
                                 onSubmit={(nickname) => {this.onGetPokemon(nickname)}}
                             /> 
                         </div> : null
-                    }
-                    
-                    </div>
-                    
+                    }                    
                     
                 </Container>
             </div>

@@ -41,7 +41,8 @@ export default class Message extends React.Component {
         const {title, message, isSubmit, onClose, onSubmit} = this.props;
         const classes = this.useStyles
         return (
-            <Card className={classes.root} variant="outlined">
+            <Card className={classes.root} variant="outlined" 
+            style={{backgroundColor: isSubmit ? '#66bb6a' : '#ef5350', color: 'white'}}>
               <CardContent>
                 <Typography variant="h5" component="h3">
                   {title}
