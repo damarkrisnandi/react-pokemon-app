@@ -1,9 +1,11 @@
-import { capitalize, Container } from '@material-ui/core';
+import { capitalize, Chip, Container, Grid, Card, CardContent, Typography } from '@material-ui/core';
 import React from 'react';
 import AppTable from '../components/AppTable';
 import { getData, getOwnedPokemon, savePokemon } from '../utils/service';
 import PokeBall from '../components/AppPokeBall';
 import Message from '../components/AppMessage';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import MyLocationIcon from '@material-ui/icons/MyLocation';
 
 export default class PokemonDetail extends React.Component {
     image = '';
@@ -70,18 +72,61 @@ export default class PokemonDetail extends React.Component {
             <div>
                 <Container style={{ marginBottom: '100px'}}>
                     <div>
-                        <span><h2>{capitalize(this.props.pokemon.name)}</h2></span>
+                        <div style={{paddingTop: '15px'}}>
+                            <Typography variant="h4" component="h3">
+                                {capitalize(this.props.pokemon.name)} 
+                            </Typography>
+                        </div>
+                        {
+                            this.state.pokemonDetail.types.map(data => (
+                                <Chip
+                                    label={data.type.name}
+                                    color="primary"
+                                    size="small"
+                                    variant="outlined"
+                                    style={{marginRight: '5px'}}
+                                />
+                            ))
+                        }
                         <img src={this.image} alt={this.props.pokemon.name} style={{width: '100%',height: 'auto'}}></img>
-                        <label><strong>Types: {this.state.pokemonDetail.types.map(data => data.type.name).join(', ')}</strong></label>
-                        <br></br>
-                        <label><strong>Moves </strong></label>
-                        <br></br>
-                        <AppTable data={this.state.pokemonDetail.moves.map(data => data.move)}></AppTable>
+                        <br/>
+                        <Grid container spacing={3}>
+                            <Grid item xs={6}>
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="h5" component="h3">
+                                        <FavoriteIcon /> HP 
+                                        </Typography>
+                                        
+                                        <Typography variant="h4" component="p">
+                                            {this.state.pokemonDetail.stats[0].base_stat}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="h5" component="h3">
+                                        <MyLocationIcon /> ATK 
+                                        </Typography>
+                                        
+                                        <Typography variant="h4" component="p">
+                                            {this.state.pokemonDetail.stats[1].base_stat}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>    
+                            </Grid>
+                        </Grid>
+                        <br/>
+                        <AppTable 
+                            head="Moves"
+                            rows={this.state.pokemonDetail.moves.map(data => data.move)} />
                         <div style={{position:'fixed', bottom: '10%', right: '50%', transform: 'translate(50%, 50%)', zIndex: '999'}}>
-                        <PokeBall 
-                        click={(data) => { this.isSavePokemon(data === 1) }} 
-                        disabled={this.state.openSuccessDlg || this.state.openFailedDlg}
-                        />
+                            <PokeBall 
+                                click={(data) => { this.isSavePokemon(data === 1) }} 
+                                disabled={this.state.openSuccessDlg || this.state.openFailedDlg}
+                            />
                         </div>
                     </div>
                     {

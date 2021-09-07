@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import { Chip } from '@material-ui/core';
+import { Fab, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -28,20 +28,29 @@ export default function PokeBall(props) {
   }
 
   return (
-    <Chip
-    avatar={
-        <Avatar 
+    <div>
+    <Fab 
+      color="primary" 
+      aria-label="add"
+      onClick={handleClick}
+      disabled={disabled}
+    >
+    <Avatar 
         alt="PokeBall" 
         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" 
         className={classes.large} />
-    }
+    </Fab>
+    <br/>
+    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <Typography>Catch!</Typography>
+    </div>
+    {/* <Chip
     label="Catch!"
-    clickable
     color="primary"
     size="medium"
-    onClick={handleClick}
+    variant="outlined"
     disabled={disabled}
-  />
-    
+  /> */}
+    </div>
   );
 }

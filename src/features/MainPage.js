@@ -29,7 +29,7 @@ export default function MainPage(props) {
     const [menu, setMenu] = React.useState(0);
     return (
         <div>
-            <div style={{maxWidth: '500px', display: 'block', margin: 'auto'}}>
+            <div style={{maxWidth: '500px', display: 'block', margin: 'auto', paddingBottom: '50px'}}>
                 <Features 
                     menu={menu}
                     showDetail={() => {setMenu(2)}}

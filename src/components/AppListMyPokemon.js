@@ -4,7 +4,7 @@ import { capitalize } from '../utils/miscellanous';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { ListItemAvatar, Avatar, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+import { ListItemAvatar, Avatar, ListItemSecondaryAction, IconButton, Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -24,13 +24,15 @@ export default function ListMyPokemon(props) {
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem>
-                    <ListItemText primary={title} style={{fontWeight: 'bold'}}/>
+                    <Typography variant="h4" component="h3">
+                        {title} 
+                    </Typography>
                 </ListItem>
             </List>
             <Divider />
             <List component="nav" aria-label="secondary mailbox folders">
                 {list.map((row) => (
-                    <ListItem button onClick={async () => await props.selectData(row)} key={row.nickname}>
+                    <ListItem key={row.nickname}>
                         <ListItemAvatar>
                             <Avatar alt={row.nickname} src={row.img} />
                         </ListItemAvatar>

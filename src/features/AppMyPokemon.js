@@ -1,4 +1,5 @@
 import React from 'react';
+import Confirmation from '../components/AppConfirmation';
 // import { makeStyles } from '@material-ui/core/styles';
 import ListMyPokemon from '../components/AppListMyPokemon';
 import { getOwnedPokemon, deleteOwnedPokemon } from '../utils/service';
@@ -8,7 +9,8 @@ export default class MyPokemonList extends React.Component {
         super(props);
         this.state = {
             myPokemonList: [],
-            selectedPokemon: null
+            selectedPokemon: null,
+            openConfirm: false
         }
     }
 
@@ -23,23 +25,35 @@ export default class MyPokemonList extends React.Component {
 
     deletePokemon(data) {
         deleteOwnedPokemon(data.nickname);
-        this.setState({ myPokemonList: getOwnedPokemon()});
+        this.setState({ myPokemonList: getOwnedPokemon(), openConfirm: false});
     }
 
     render() {
         
         return (
+            <div>
             <ListMyPokemon
                 title='My Pokemon'
                 list={this.state.myPokemonList}
-                selectData={(data) => {
-                    this.selectedPokemon(data);
-                    // this.props.selectedPokemon(data);
-                }}
                 deleteData={(data) => {
-                    this.deletePokemon(data)
+                    this.selectedPokemon(data);
+                    this.setState({ openConfirm: true })
+                    // this.deletePokemon(data)
                 }}
             ></ListMyPokemon>
+            {
+            this.state.openConfirm ? 
+                        <div style={{position:'fixed', bottom: '30%', right: '50%', transform: 'translate(50%, 50%)', maxWidth: '500px', width: '100%'}}>
+                            <div style={{width: '100%'}}>
+                                <Confirmation
+                                    message={`Are you sure to delete ${this.state.selectedPokemon.nickname } (${this.state.selectedPokemon.name})?`}
+                                    onAccept={() => { this.deletePokemon(this.state.selectedPokemon) }}
+                                    onReject={() => { this.setState({ openConfirm: false })}}
+                                />
+                            </div> 
+                        </div> : null
+                    }
+            </div>
         )
     }
     

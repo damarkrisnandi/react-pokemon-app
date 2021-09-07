@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import { Chip } from '@material-ui/core';
+import { Chip, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
   table: {
@@ -23,7 +23,9 @@ export default function AppList(props) {
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem>
-                    <ListItemText primary={title} style={{fontWeight: 'bold'}}/>
+                    <Typography variant="h4" component="h3">
+                        {title} 
+                    </Typography>
                 </ListItem>
             </List>
             <Divider />

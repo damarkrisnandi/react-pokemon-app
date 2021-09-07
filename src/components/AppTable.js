@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -90,7 +91,7 @@ const useStyles2 = makeStyles({
 });
 
 export default function AppTable(props) {
-    const rows = props.data;
+  const {rows, head} = props;
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -109,12 +110,17 @@ export default function AppTable(props) {
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
+        <TableHead>
+          <TableRow>
+            <TableCell style={{fontSize: '20px'}}><strong>{head}</strong></TableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.url}>
               <TableCell component="th" scope="row">
                 {capitalize(row.name)}
               </TableCell>
