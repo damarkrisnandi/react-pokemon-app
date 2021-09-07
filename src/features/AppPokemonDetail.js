@@ -1,4 +1,4 @@
-import { capitalize, Chip, Container, Grid, Card, CardContent, Typography } from '@material-ui/core';
+import { capitalize, Chip, Container, Grid, Card, CardContent, Typography, Avatar } from '@material-ui/core';
 import React from 'react';
 import AppTable from '../components/AppTable';
 import { getData, getOwnedPokemon, savePokemon } from '../utils/service';
@@ -18,7 +18,8 @@ export default class PokemonDetail extends React.Component {
             pokemonDetail: null,
             openSuccessDlg: false,
             openFailedDlg: false,
-            errorSubmitMessage: ''
+            errorSubmitMessage: '',
+            loading: false
         };
     }
 
@@ -32,11 +33,15 @@ export default class PokemonDetail extends React.Component {
     }
 
     isSavePokemon(isGet) {
-        if (isGet) {
-            this.setState({ openSuccessDlg: true, openFailedDlg: false });
-        } else {
-            this.setState({ openFailedDlg: true, openSuccessDlg: false });
-        }
+        this.setState({ loading: true })
+        setTimeout(() => {
+            if (isGet) {
+                this.setState({ openSuccessDlg: true, openFailedDlg: false, loading: false });
+            } else {
+                this.setState({ openFailedDlg: true, openSuccessDlg: false, loading: false });
+            }
+        }, 2000)
+        
     }
 
     onGetPokemon(nickname) {
@@ -70,7 +75,7 @@ export default class PokemonDetail extends React.Component {
         if (!this.state.pokemonDetail) return null;
         return (
             <div>
-                <Container style={{ marginBottom: '100px'}}>
+                <Container style={{ paddingBottom: '100px', backgroundColor: '#f7faff'}}>
                     <div>
                         <div style={{paddingTop: '15px'}}>
                             <Typography variant="h4" component="h3">
@@ -125,13 +130,26 @@ export default class PokemonDetail extends React.Component {
                         <div style={{position:'fixed', bottom: '10%', right: '50%', transform: 'translate(50%, 50%)', zIndex: '999'}}>
                             <PokeBall 
                                 click={(data) => { this.isSavePokemon(data === 1) }} 
-                                disabled={this.state.openSuccessDlg || this.state.openFailedDlg}
+                                disabled={this.state.openSuccessDlg || this.state.openFailedDlg || this.state.loading}
                             />
                         </div>
                     </div>
+                    {this.state.loading ? (
+                        <div style={{position:'fixed', bottom: '50%', right: '50%', transform: 'translate(50%, 50%) scale(120%, 120%)', maxWidth: '500px'}}>
+                            <Avatar 
+                            alt="PokeBall" 
+                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" 
+                            />
+                            <div style={{position:'fixed', bottom: '-20%', right: '50%', transform: 'translate(50%, 50%)'}}>
+                                <Typography>Catching...</Typography>
+                            </div>
+                        </div>
+                    ) : null}
+                    
                     {
                         this.state.openSuccessDlg || this.state.openFailedDlg ? 
                         <div style={{position:'fixed', bottom: '50%', right: '50%', transform: 'translate(50%, 50%)', maxWidth: '500px', width: '100%'}}>
+                            
                             <div style={{width: '100%'}}>
                                 <Message 
                                     title={this.state.openSuccessDlg && !this.state.openFailedDlg ? 'Success' : 'Failed'}
@@ -146,7 +164,8 @@ export default class PokemonDetail extends React.Component {
                                 />
                             </div> 
                         </div> : null
-                    }                    
+                    }            
+                            
                     
                 </Container>
             </div>
