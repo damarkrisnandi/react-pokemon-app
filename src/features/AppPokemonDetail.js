@@ -1,4 +1,4 @@
-import { capitalize, Chip, Container, Grid, Card, CardContent, Typography, Avatar } from '@material-ui/core';
+import { capitalize, Chip, Container, Grid, Typography, Avatar } from '@material-ui/core';
 import React from 'react';
 import AppTable from '../components/AppTable';
 import { getData, getOwnedPokemon, savePokemon } from '../utils/service';
@@ -6,6 +6,8 @@ import PokeBall from '../components/AppPokeBall';
 import Message from '../components/AppMessage';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
+import Stats from '../components/AppStats';
+import { css } from '@emotion/css'
 
 export default class PokemonDetail extends React.Component {
     image = '';
@@ -61,6 +63,20 @@ export default class PokemonDetail extends React.Component {
         savePokemon(newData);
         this.setState({ openSuccessDlg: false, openFailedDlg: false });
     }
+
+    centerStyle() {
+        return `position: fixed;
+        bottom: 50%;
+        right: 50%;
+        transform: translate(50%, 50%);`
+    }
+
+    catchButtonStyle() {
+        return `position: fixed;
+        bottom: 10%;
+        right: 50%;
+        transform: translate(50%, 50%);`
+    }
     
     valid(nickname) {
         if (this.ownedPokemons.find((data) => data.nickname.toLowerCase() === (nickname).toLowerCase())) {
@@ -75,9 +91,14 @@ export default class PokemonDetail extends React.Component {
         if (!this.state.pokemonDetail) return null;
         return (
             <div>
-                <Container style={{ paddingBottom: '100px', backgroundColor: '#f7faff'}}>
+                <Container className={css`
+                    padding-bottom: 100px;
+                    background-color: #f7faff;
+                `}>
                     <div>
-                        <div style={{paddingTop: '15px'}}>
+                        <div className={css`
+                            padding-top: 15px
+                        `}>
                             <Typography variant="h4" component="h3">
                                 {capitalize(this.props.pokemon.name)} 
                             </Typography>
@@ -93,41 +114,37 @@ export default class PokemonDetail extends React.Component {
                                 />
                             ))
                         }
-                        <img src={this.image} alt={this.props.pokemon.name} style={{width: '100%',height: 'auto'}}></img>
+                        <img src={this.image} alt={this.props.pokemon.name} 
+                        className={css`
+                            width: 100%;
+                            height: auto
+                        `}></img>
                         <br/>
                         <Grid container spacing={3}>
                             <Grid item xs={6}>
-                                <Card>
-                                    <CardContent>
-                                        <Typography variant="h5" component="h3">
-                                        <FavoriteIcon /> HP 
-                                        </Typography>
-                                        
-                                        <Typography variant="h4" component="p">
-                                            {this.state.pokemonDetail.stats[0].base_stat}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
+                                <Stats
+                                    stat='HP'
+                                    icon={ <FavoriteIcon />}
+                                    value={this.state.pokemonDetail.stats[0].base_stat}
+                                />
                             </Grid>
                             <Grid item xs={6}>
-                                <Card>
-                                    <CardContent>
-                                        <Typography variant="h5" component="h3">
-                                        <MyLocationIcon /> ATK 
-                                        </Typography>
-                                        
-                                        <Typography variant="h4" component="p">
-                                            {this.state.pokemonDetail.stats[1].base_stat}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>    
+                                <Stats 
+                                    stat='ATK'
+                                    icon={<MyLocationIcon />}
+                                    value={this.state.pokemonDetail.stats[1].base_stat}
+                                />
                             </Grid>
                         </Grid>
                         <br/>
                         <AppTable 
                             head="Moves"
                             rows={this.state.pokemonDetail.moves.map(data => data.move)} />
-                        <div style={{position:'fixed', bottom: '10%', right: '50%', transform: 'translate(50%, 50%)', zIndex: '999'}}>
+                        <div 
+                        className={css`
+                            ${this.centerStyle()}
+                            z-index: 100
+                        `}>
                             <PokeBall 
                                 click={(data) => { this.isSavePokemon(data === 1) }} 
                                 disabled={this.state.openSuccessDlg || this.state.openFailedDlg || this.state.loading}
@@ -135,12 +152,17 @@ export default class PokemonDetail extends React.Component {
                         </div>
                     </div>
                     {this.state.loading ? (
-                        <div style={{position:'fixed', bottom: '50%', right: '50%', transform: 'translate(50%, 50%) scale(120%, 120%)', maxWidth: '500px'}}>
+                        <div className={css`
+                            ${this.centerStyle()}
+                            maxWidth: 500px
+                        `}>
                             <Avatar 
                             alt="PokeBall" 
                             src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" 
                             />
-                            <div style={{position:'fixed', bottom: '-20%', right: '50%', transform: 'translate(50%, 50%)'}}>
+                            <div className={css`
+                                ${this.catchButtonStyle()}
+                            `}>
                                 <Typography>Catching...</Typography>
                             </div>
                         </div>
@@ -148,9 +170,15 @@ export default class PokemonDetail extends React.Component {
                     
                     {
                         this.state.openSuccessDlg || this.state.openFailedDlg ? 
-                        <div style={{position:'fixed', bottom: '50%', right: '50%', transform: 'translate(50%, 50%)', maxWidth: '500px', width: '100%'}}>
+                        <div className={css`
+                        ${this.centerStyle()}
+                        maxWidth: 500px;
+                        width: 100%;
+                    `}>
                             
-                            <div style={{width: '100%'}}>
+                            <div className={css`
+                                width: 100%;
+                            `}>
                                 <Message 
                                     title={this.state.openSuccessDlg && !this.state.openFailedDlg ? 'Success' : 'Failed'}
                                     message={this.state.openSuccessDlg && !this.state.openFailedDlg ? 
@@ -164,9 +192,7 @@ export default class PokemonDetail extends React.Component {
                                 />
                             </div> 
                         </div> : null
-                    }            
-                            
-                    
+                    } 
                 </Container>
             </div>
         );

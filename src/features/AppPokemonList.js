@@ -4,6 +4,7 @@ import AppList from '../components/AppList';
 import { getListByPage, getOwnedPokemon } from '../utils/service';
 import Pagination from '@material-ui/lab/Pagination';
 import { LinearProgress } from '@material-ui/core';
+import { css } from '@emotion/css'
 
 export default class PokemonList extends React.Component {
     showDetail = false;
@@ -61,7 +62,10 @@ export default class PokemonList extends React.Component {
 
     render() {
         return (
-            <div style={{marginBottom: '100px'}}>
+            <div 
+            className={css`
+                margin-bottom: 100px;
+            `}>
                 {this.state.pokemonList && this.state.pokemonList.length > 0 ? (
                     <div>
                         <AppList 
@@ -73,7 +77,12 @@ export default class PokemonList extends React.Component {
                                     this.props.selectedPokemon(data);
                                 }}
                         ></AppList>
-                        <div style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
+                        <div className={css`
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        `}
+                        >
                         <Pagination 
                             count={Math.floor(this.state.pagination.rowCount/ this.state.pagination.pageSize)} 
                             defaultPage={1} 

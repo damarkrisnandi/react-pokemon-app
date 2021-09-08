@@ -2,8 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import ListIcon from '@material-ui/icons/List';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 const useStyles = makeStyles({
   root: {
@@ -14,10 +12,11 @@ const useStyles = makeStyles({
 });
 
 export default function AppNav(props) {
-    const menu = props.menu;
+    const {list, menu} = props;
     const classes = useStyles();
     const [value, setValue] = React.useState(menu);
 
+    console.log(list)
     return (
         <BottomNavigation
         value={value}
@@ -27,8 +26,12 @@ export default function AppNav(props) {
         showLabels
         className={classes.root}
         >
-        <BottomNavigationAction label="Pokemon List" icon={<ListIcon />} onClick={() => {props.selectMenu(0)}}/>
-        <BottomNavigationAction label="My Pokemon List" icon={<AssignmentTurnedInIcon />} onClick={() => {props.selectMenu(1)}}/>
+          {
+            list.map((menu, index) => (
+              <BottomNavigationAction key={menu.name} label={menu.name} icon={menu.icon} onClick={(index) => {menu.onClick(index)}}/>
+            )
+            )
+          }
         </BottomNavigation>
     );
 }

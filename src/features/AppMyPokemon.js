@@ -3,6 +3,7 @@ import Confirmation from '../components/AppConfirmation';
 // import { makeStyles } from '@material-ui/core/styles';
 import ListMyPokemon from '../components/AppListMyPokemon';
 import { getOwnedPokemon, deleteOwnedPokemon } from '../utils/service';
+import { css } from '@emotion/css';
 
 export default class MyPokemonList extends React.Component {   
     constructor(props) {
@@ -43,7 +44,15 @@ export default class MyPokemonList extends React.Component {
             ></ListMyPokemon>
             {
             this.state.openConfirm ? 
-                        <div style={{position:'fixed', bottom: '30%', right: '50%', transform: 'translate(50%, 50%)', maxWidth: '500px', width: '100%'}}>
+                        <div 
+                        className={css`
+                            position: fixed;
+                            bottom: 50%;
+                            right: 50%;
+                            transform: translate(50%, 50%);
+                            maxWidth: 500px;
+                            width: 100%;
+                        `}>
                             <div style={{width: '100%'}}>
                                 <Confirmation
                                     message={`Are you sure to delete ${this.state.selectedPokemon.nickname } (${this.state.selectedPokemon.name})?`}
