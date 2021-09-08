@@ -173,7 +173,7 @@ export default class PokemonDetail extends React.Component {
                         this.state.openSuccessDlg || this.state.openFailedDlg ? 
                         <div className={css`
                         ${this.centerStyle()}
-                        maxWidth: 500px;
+                        max-width: 500px;
                         width: 100%;
                     `}>
                             
