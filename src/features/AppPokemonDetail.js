@@ -142,7 +142,7 @@ export default class PokemonDetail extends React.Component {
                             rows={this.state.pokemonDetail.moves.map(data => data.move)} />
                         <div 
                         className={css`
-                            ${this.centerStyle()}
+                            ${this.catchButtonStyle()}
                             z-index: 100
                         `}>
                             <PokeBall 
@@ -161,7 +161,8 @@ export default class PokemonDetail extends React.Component {
                             src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" 
                             />
                             <div className={css`
-                                ${this.catchButtonStyle()}
+                                ${this.centerStyle()}
+                                bottom: -20%;
                             `}>
                                 <Typography>Catching...</Typography>
                             </div>
