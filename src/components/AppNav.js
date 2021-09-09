@@ -16,7 +16,6 @@ export default function AppNav(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(menu);
 
-    console.log(list)
     return (
         <BottomNavigation
         value={value}
