@@ -10,14 +10,14 @@ import Hidden from '@material-ui/core/Hidden';
 import { css } from '@emotion/css'
 
 let selectedPokemon = null;
+export function selectedPokemonFunc(prop, data) {
+    selectedPokemon = data;
+    prop.showDetail(true)
+}
+
 export function Features(prop) {
     if (prop.menu === 0) {
-        return (<PokemonList default={true} selectedPokemon={ (data) => 
-            {
-                selectedPokemon = data;
-                prop.showDetail(true)
-            }
-        }></PokemonList>)
+        return (<PokemonList default={true} selectedPokemon={ (data) => selectedPokemonFunc(prop, data)}></PokemonList>)
     } else if (prop.menu === 1) {
         return (
             <MyPokemonList />
@@ -33,9 +33,11 @@ export function Features(prop) {
 export default function MainPage(props) {
     const [menu, setMenu] = React.useState(0);
 
+    const handleChangeMenu = (index) => setMenu(index);
+
     const listMenu = [
-        {name: 'Pokemon List', icon: <ListIcon />, onClick: (index) => {setMenu(0)}},
-        {name: 'My Pokemon List', icon: <AssignmentTurnedInIcon />, onClick: (index) => {setMenu(1)}}
+        {name: 'Pokemon List', icon: <ListIcon />, onClick: function () { handleChangeMenu(0) }},
+        {name: 'My Pokemon List', icon: <AssignmentTurnedInIcon />, onClick: function () { handleChangeMenu(1) }}
     ]
     return (
         <div>
@@ -51,10 +53,7 @@ export default function MainPage(props) {
                     padding-bottom: 50px;
                 `} 
                 style={{}}>
-                    <Features 
-                        menu={menu}
-                        showDetail={() => {setMenu(2)}}
-                    />
+                    <Features menu={menu} showDetail={() => handleChangeMenu(2)} />
                 </div>
             </div>
             <Hidden only={['lg', 'xl']}>

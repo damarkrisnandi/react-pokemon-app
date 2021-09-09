@@ -24,17 +24,17 @@ export default class PokemonList extends React.Component {
 
     setPokemonList(res) {
         let pokemonList = [];
-            const ownedPokemon = getOwnedPokemon();
-            for (let data of res.results) {
-                let ownedByName = ownedPokemon.filter(o => o.name === data.name);
-                const pokemon = {
-                    name: data.name,
-                    url: data.url,
-                    owned: ownedByName.length
-                }
-                pokemonList = [...pokemonList, pokemon];
+        const ownedPokemon = getOwnedPokemon();
+        for (let data of res.results) {
+            let ownedByName = ownedPokemon.filter(o => o.name === data.name);
+            const pokemon = {
+                name: data.name,
+                url: data.url,
+                owned: ownedByName.length
             }
-            this.setState({ pokemonList })
+            pokemonList = [...pokemonList, pokemon];
+        }
+        this.setState({ pokemonList })
     }
 
     componentDidMount() {
@@ -60,6 +60,11 @@ export default class PokemonList extends React.Component {
         })
     }
 
+    handleSelect(data) {
+        this.selectedPokemon(data);
+        this.props.selectedPokemon(data);
+    }
+
     render() {
         return (
             <div 
@@ -71,11 +76,7 @@ export default class PokemonList extends React.Component {
                         <AppList 
                             title='Pokemon'
                             list={this.state.pokemonList}
-                            selectData={(data) => 
-                                {
-                                    this.selectedPokemon(data);
-                                    this.props.selectedPokemon(data);
-                                }}
+                            selectData={(data) => this.handleSelect(data) }
                         ></AppList>
                         <div className={css`
                             display: flex;
