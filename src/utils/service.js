@@ -2,13 +2,7 @@ const URL_API = 'https://pokeapi.co/api/v2';
 const headers = {'Content-Type': 'application/json'};
 
 export async function getAll() {
-    const url = `${URL_API}/pokemon`;
-    const response = await fetch(url, {
-        method: 'GET',
-        headers
-    })
-    .then(_ => _.ok ? _.json() : null)
-
+    const response = await getData(`${URL_API}/pokemon`);
     return response;
 }
 
@@ -46,7 +40,7 @@ export function getOwnedPokemon() {
 
 export function deleteOwnedPokemon(nickname) {
     const ownedPokemon = JSON.parse(localStorage.getItem('ownedPokemon'));
-    if (ownedPokemon) {
+    if (ownedPokemon.length > 0) {
         const idx = ownedPokemon.findIndex(data => data.nickname === nickname);
         ownedPokemon.splice(idx, 1);
         localStorage.setItem('ownedPokemon', JSON.stringify(ownedPokemon));
