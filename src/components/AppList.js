@@ -23,7 +23,7 @@ export default function AppList(props) {
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem>
-                    <Typography variant="h4" component="h3">
+                    <Typography variant="h5" component="h3">
                         {title} 
                     </Typography>
                 </ListItem>

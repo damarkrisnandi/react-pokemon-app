@@ -100,7 +100,7 @@ export default class PokemonDetail extends React.Component {
                         <div className={css`
                             padding-top: 15px
                         `}>
-                            <Typography variant="h4" component="h3">
+                            <Typography variant="h5" component="h3">
                                 {capitalize(this.props.pokemon.name)} 
                             </Typography>
                         </div>
