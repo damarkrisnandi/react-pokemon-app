@@ -84,7 +84,7 @@ export default class PokemonList extends React.Component {
                         `}
                         >
                         <Pagination 
-                            count={Math.floor(this.state.pagination.rowCount/ this.state.pagination.pageSize)} 
+                            count={Math.ceil(this.state.pagination.rowCount/ this.state.pagination.pageSize)} 
                             defaultPage={1} 
                             siblingCount={0} 
                             page={this.state.pagination.currentPage} onChange={(event, value) => this.handlePageChange(value)}

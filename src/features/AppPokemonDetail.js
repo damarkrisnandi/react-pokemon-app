@@ -7,7 +7,8 @@ import Message from '../components/AppMessage';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import Stats from '../components/AppStats';
-import { css } from '@emotion/css'
+import { css } from '@emotion/css';
+import no_image from '../assets/no_image.png'
 
 export default class PokemonDetail extends React.Component {
     image = '';
@@ -27,7 +28,7 @@ export default class PokemonDetail extends React.Component {
 
     async componentDidMount() {
         getData(this.props.pokemon.url).then(pokemonDetail => {
-            this.image = pokemonDetail.sprites.other['official-artwork'].front_default;
+            this.image = pokemonDetail.sprites.other['official-artwork'].front_default || no_image;
             this.ownedPokemons = getOwnedPokemon();
             this.setState({ pokemonDetail });
         });
@@ -117,7 +118,8 @@ export default class PokemonDetail extends React.Component {
                         <img src={this.image} alt={this.props.pokemon.name} 
                         className={css`
                             width: 100%;
-                            height: auto
+                            height: auto;
+                            margin-top: 10px;
                         `}></img>
                         <br/>
                         <Grid container spacing={3}>
